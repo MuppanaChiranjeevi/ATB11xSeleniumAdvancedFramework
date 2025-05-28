@@ -11,7 +11,7 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 
 public class DriverManager {
 
-    public static WebDriver driver;
+    private static WebDriver driver;
 
     public static WebDriver getDriver() {
         return driver;
@@ -25,6 +25,7 @@ public class DriverManager {
     // When we want to start the browser
     public static void init(){
         String browser = PropertiesReader.readKey("browser");
+        browser = browser.toLowerCase();
 
         switch (browser){
             case "edge" :

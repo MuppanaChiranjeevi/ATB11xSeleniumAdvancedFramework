@@ -1,4 +1,4 @@
-package com.thetestingacademy.pages.pageObjectModel.normal_POM;
+package com.thetestingacademy.pages.pageObjectModel.normal_POM.vwo;
 
 
 import com.thetestingacademy.utils.PropertiesReader;
@@ -6,8 +6,6 @@ import com.thetestingacademy.utils.WaitHelpers;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-import static com.thetestingacademy.driver.DriverManager.getDriver;
-import static com.thetestingacademy.driver.DriverManager.setDriver;
 
 // Page Class
 public class LoginPage {
@@ -15,7 +13,7 @@ public class LoginPage {
     WebDriver driver;
 
     public LoginPage(WebDriver driver) {
-        setDriver(driver);
+        this.driver = driver;
     }
 
     // Step 1- Page Locators
@@ -34,17 +32,26 @@ public class LoginPage {
 
     // Step 2 - Page Actions
     public String loginToVWOLoginInvalidCreds(String user, String pwd) {
-        getDriver().get(PropertiesReader.readKey("url"));
-        getDriver().findElement(username).sendKeys(user);
-        getDriver().findElement(password).sendKeys(pwd);
-        getDriver().findElement(signButton).click();
+        driver.get(PropertiesReader.readKey("url"));
+        driver.findElement(username).sendKeys(user);
+        driver.findElement(password).sendKeys(pwd);
+        driver.findElement(signButton).click();
+
+
+        WaitHelpers.checkVisibility(driver,error_message,3);
+
+        String error_message_text = driver.findElement(error_message).getText();
+        return error_message_text;
+    }
+    public void loginToVWOLoginValidCreds(String user, String pwd) {
+
+        driver.get(PropertiesReader.readKey("url"));
+        driver.findElement(username).sendKeys(user);
+        driver.findElement(password).sendKeys(pwd);
+        driver.findElement(signButton).click();
 
         // Wait - Thread sleep
-//        WaitHelpers.waitJVM(5000);
+        WaitHelpers.waitJVM(5000);
 
-        WaitHelpers.checkVisibility(getDriver(),error_message,3);
-
-        String error_message_text = getDriver().findElement(error_message).getText();
-        return error_message_text;
     }
 }
